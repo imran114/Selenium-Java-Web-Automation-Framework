@@ -14,7 +14,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TripShepherdPage extends BaseClass {
+public class TripShepherdPage extends BaseClass  {
     private final By findCityTextFieldXpath;
     private final By austinCityButtonXpath;
     private final By privateTourFilterXpath;

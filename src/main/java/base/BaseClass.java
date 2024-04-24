@@ -15,7 +15,7 @@ import pages.TripShepherdPage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class BaseClass {
+public class BaseClass  {
     protected static WebDriver driver;
     protected String result;
     private static WebDriverWait wait;

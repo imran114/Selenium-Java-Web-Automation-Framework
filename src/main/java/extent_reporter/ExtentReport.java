@@ -7,7 +7,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.openqa.selenium.WebDriver;
 
 
-public class ExtentReport {
+public class ExtentReport  {
     private WebDriver driver;
     ExtentSparkReporter spark;
     ExtentReports extentReports;
