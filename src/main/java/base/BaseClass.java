@@ -1,6 +1,7 @@
 package base;
 
 
+import email.EmailSender;
 import extent_reporter.ExtentReport;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -23,6 +24,7 @@ public class BaseClass  {
     protected String actualResult;
     public String expectedResult;
     public static TripShepherdPage tripShepherdPage;
+    private static EmailSender emailSender;
 
     @BeforeSuite
     public static void setUp() {
@@ -35,6 +37,7 @@ public class BaseClass  {
         driver.manage().window().maximize();
         extentReport = new ExtentReport(driver);
         extentReport.extentReporter();
+        emailSender = new EmailSender();
 
     }
     public void waitForClickable(By locator) throws IOException {
@@ -57,6 +60,12 @@ public class BaseClass  {
         if (driver != null) {
             driver.close();
         }
+
+        String subject = "TripShepherd Automation Report";
+        String recipient = "imranullah114@gmail.com";
+        // Call the sendEmail method with the recipients array
+
+        emailSender.sendEmail(recipient, subject);
         extentReport.flushExtentReport();
     }
 }
