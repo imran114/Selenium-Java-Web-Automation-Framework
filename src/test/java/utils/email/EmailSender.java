@@ -1,8 +1,8 @@
-package email;
+package utils.email;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.PropertiesFileReader;
+import utils.file_reader.PropertiesFileReader;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -10,6 +10,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -17,13 +18,15 @@ import java.util.Properties;
 
 // This class is responsible for sending emails.
 public class EmailSender {
-
     private static final Logger logger = LogManager.getLogger(EmailSender.class);
 
-    String[] cc = {
-            "imranullahust@gmail.com"
-    };
+
     private final PropertiesFileReader fileReader;
+    String[] cc = {
+            "email1@gmail.com",
+            "email2@gmail.com",
+            "email3@gmail.com"
+    };
 
     public EmailSender() {
         fileReader = new PropertiesFileReader();
@@ -45,7 +48,7 @@ public class EmailSender {
         String email = fileReader.getEmail();
         String pass = fileReader.getEmailPassword();
 
-        // Get the Session object.// and pass username and password
+         // Get the Session object.// and pass username and password
         Session session = Session.getInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(email, pass);
@@ -63,15 +66,8 @@ public class EmailSender {
                 ccAddresses[i] = new InternetAddress(cc[i]);
             }
             message.addRecipients(Message.RecipientType.CC, ccAddresses);
-
-            //message.setSubject(subject);
-            System.out.println("subject added.");
             // Create the message body part
-            message.setSubject("TripShepherd Automation Report");
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText("body");
-            System.out.println("Body Added");
-//
+            message.setSubject(subject);
             // Create the multipart message
             Multipart multipart = new MimeMultipart();
             MimeBodyPart attachmentPart = new MimeBodyPart();
@@ -79,17 +75,14 @@ public class EmailSender {
 
             System.out.println("Message In Body Added");
             // Add the attachment if provided
+            String filePath = "src/test/resources/test_data_files/email_body.README";
+            String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
 
             try {
-                File file = new File("src/test/java/reports/report.html");
+                File file = new File("src/test/resources/reports/report.html");
+
                 attachmentPart.attachFile(file);
-                String filePath = "src/main/java/email/email_body.README";
-                String fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
-
-                // this is the body of the email
                 textPart.setText(fileContent);
-
-
                 multipart.addBodyPart(textPart);
                 multipart.addBodyPart(attachmentPart);
                 System.out.println("Report Attached.");
@@ -106,6 +99,8 @@ public class EmailSender {
             logger.info("Email sent successfully.");
         } catch (MessagingException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

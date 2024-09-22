@@ -1,4 +1,4 @@
-package listener;
+package utils.listener;
 
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -35,6 +35,5 @@ public class TestListener implements ITestListener {
     public void onFinish(ITestContext context) {
 
     }
-
 }
 

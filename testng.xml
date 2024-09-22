@@ -2,11 +2,11 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Test Suite">
     <listeners>
-        <listener class-name="listener.TestListener"/>
+        <listener class-name="utils.listener.TestListener"/>
     </listeners>
-    <test name="AutomationTask">
+    <test name="WebAutomationFramework">
         <classes>
-            <class name="tests.TripShepherdTest"> </class>
+            <class name="tests.LoginTest"></class>
         </classes>
     </test>
 </suite>
