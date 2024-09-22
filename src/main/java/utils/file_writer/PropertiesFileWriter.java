@@ -67,9 +67,6 @@ public class PropertiesFileWriter {
         logger.info("Updated property: " + key + " in file: " + filePath);
     }
 
-    /****************************************************************
-     Specific methods to update properties in your configuration files
-     ****************************************************************/
 
     // Updates the 'userName' property in the configuration file
     public void updateUserName(String userName) {
